@@ -13,6 +13,12 @@ use Hyperf\Validation\ValidationException;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
+/**
+ * 全局异常处理器
+ *
+ * @author duiying <wangyaxiandev@gmail.com>
+ * @package HyperfPlus\Exception\Handler
+ */
 class AppExceptionHandler extends ExceptionHandler
 {
     public function handle(Throwable $throwable, ResponseInterface $response)

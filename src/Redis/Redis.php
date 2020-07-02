@@ -13,7 +13,6 @@ use Hyperf\Utils\ApplicationContext;
  */
 class Redis
 {
-
     /******************** string begin ********************/
     public function set($key, $value, $timeout = null, $poolName = 'default')
     {
