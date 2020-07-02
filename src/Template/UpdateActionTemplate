@@ -36,6 +36,6 @@ class UpdateAction extends AbstractController
         $requestData['mtime'] = date('Y-m-d H:i:s');
 
         $res = $this->logic->update($requestData);
-        return $this->response->success($res);
+        return $response->success($res);
     }
 }

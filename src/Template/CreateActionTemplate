@@ -34,6 +34,6 @@ class CreateAction extends AbstractController
         $this->validationFactory->make($requestData, $this->rules)->validate();
 
         $res = $this->logic->create($requestData);
-        return $this->response->success($res);
+        return $response->success($res);
     }
 }

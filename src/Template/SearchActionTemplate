@@ -42,6 +42,6 @@ class SearchAction extends AbstractController
         if (isset($requestData['size']))    unset($requestData['size']);
 
         $res = $this->logic->search($requestData, $p, $size);
-        return $this->response->success($res);
+        return $response->success($res);
     }
 }

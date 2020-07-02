@@ -3,7 +3,6 @@
 namespace App\Module\%s\Action;
 
 use HyperfPlus\Controller\AbstractController;
-use HyperfPlus\Constant\Constant;
 use App\Module\%s\Logic\%sLogic;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
@@ -35,6 +34,6 @@ class FindAction extends AbstractController
         $this->validationFactory->make($requestData, $this->rules)->validate();
 
         $res = $this->logic->find($requestData);
-        return $this->response->success($res);
+        return $response->success($res);
     }
 }
