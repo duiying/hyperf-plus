@@ -7,7 +7,7 @@ use HyperfPlus\Constant\Constant;
 use App\Module\%s\Logic\%sLogic;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
-use Hyperf\HttpServer\Contract\ResponseInterface;
+use HyperfPlus\Http\Response;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 
 class FindAction extends AbstractController
@@ -28,7 +28,7 @@ class FindAction extends AbstractController
         %s
     ];
 
-    public function handle(RequestInterface $request, ResponseInterface $response)
+    public function handle(RequestInterface $request, Response $response)
     {
         // 参数校验
         $requestData = $request->all();
