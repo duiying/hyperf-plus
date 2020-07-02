@@ -1,0 +1,35 @@
+{
+  "name": "duiying/hyperf-plus",
+  "description": "基于 hyperf 框架定制的扩展包",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "php",
+    "hyperf"
+  ],
+  "authors": [
+    {
+      "name": "duiying",
+      "email": "wangyaxiandev@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "ext-swoole": ">=4.5",
+    "hyperf/command": "~2.0.0",
+    "hyperf/db-connection": "~2.0.0",
+    "hyperf/guzzle": "~2.0.0",
+    "hyperf/logger": "~2.0.0",
+    "hyperf/redis": "~2.0.0",
+    "hyperf/constants": "~2.0.0",
+    "hyperf/filesystem": "~2.0.0",
+    "hyperf/http-server": "~2.0.0",
+    "hyperf/utils": "~2.0.0",
+    "hyperf/validation": "~2.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "HyperfPlus\\": "src/"
+    }
+  }
+}

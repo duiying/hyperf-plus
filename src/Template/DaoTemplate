@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Module\%s\Dao;
+
+use HyperfPlus\MySQL\MySQLDao;
+
+class %sDao extends MySQLDao
+{
+    public $connection = %s;
+    public $table = %s;
+}
