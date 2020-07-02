@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HyperfPlus\Controller;
 
 use Hyperf\HttpServer\Contract\RequestInterface;
-use Hyperf\HttpServer\Contract\ResponseInterface;
+use HyperfPlus\Http\Response;
 
 /**
  * 默认控制器
@@ -15,7 +15,8 @@ use Hyperf\HttpServer\Contract\ResponseInterface;
  */
 class IndexController extends AbstractController
 {
-    public function handle(RequestInterface $request, ResponseInterface $response)
+
+    public function handle(RequestInterface $request, Response $response)
     {
         $user = $request->input('user', 'Hyperf');
         $method = $request->getMethod();
