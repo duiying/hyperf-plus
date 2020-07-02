@@ -238,7 +238,7 @@ class ModuleGenerator extends HyperfCommand
         }
 
         $path           = BASE_PATH . "/app/Module/$module/Action/FindAction.php";
-        $templateStr    = file_get_contents(BASE_PATH . "/app/Kernel/Template/FindActionTemplate");
+        $templateStr    = file_get_contents(dirname(__DIR__) . "/Template/FindActionTemplate");
         $contents       = sprintf($templateStr, $module, $module, $module, $module, $ruleStr);
         file_put_contents($path, $contents);
     }
