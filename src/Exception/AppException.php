@@ -8,7 +8,7 @@ use Throwable;
 
 /**
  * 应用异常类（业务抛出的异常）
- * 需要在 app/Constant/ 目录下新建 AppConstant、AppErrorCode 类
+ * 需要在 app/Constant/ 目录下新建 AppErrorCode 类
  *
  * @author duiying <wangyaxiandev@gmail.com>
  * @package HyperfPlus\Exception

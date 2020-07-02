@@ -17,8 +17,8 @@ class IndexController extends AbstractController
 {
     public function handle(RequestInterface $request, ResponseInterface $response)
     {
-        $user = $this->request->input('user', 'Hyperf');
-        $method = $this->request->getMethod();
+        $user = $request->input('user', 'Hyperf');
+        $method = $request->getMethod();
 
         return [
             'method' => $method,
