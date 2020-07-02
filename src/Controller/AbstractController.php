@@ -40,8 +40,8 @@ abstract class AbstractController
      * 统一Action入口方法
      *
      * @param RequestInterface $request
-     * @param ResponseInterface $response
+     * @param Response $response
      * @return mixed
      */
-    abstract public function handle(RequestInterface $request, ResponseInterface $response);
+    abstract public function handle(RequestInterface $request, Response $response);
 }
