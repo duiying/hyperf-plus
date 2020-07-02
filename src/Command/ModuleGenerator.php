@@ -132,7 +132,7 @@ class ModuleGenerator extends HyperfCommand
         }
 
         $path           = BASE_PATH . "/app/Module/$module/Action/CreateAction.php";
-        $templateStr    = file_get_contents(BASE_PATH . "/app/Kernel/Template/CreateActionTemplate");
+        $templateStr    = file_get_contents("../Template/CreateActionTemplate");
         $contents       = sprintf($templateStr, $module, $module, $module, $module, $ruleStr);
         file_put_contents($path, $contents);
     }
@@ -185,7 +185,7 @@ class ModuleGenerator extends HyperfCommand
         }
 
         $path           = BASE_PATH . "/app/Module/$module/Action/SearchAction.php";
-        $templateStr    = file_get_contents(BASE_PATH . "/app/Kernel/Template/SearchActionTemplate");
+        $templateStr    = file_get_contents("../Template/SearchActionTemplate");
         $contents       = sprintf($templateStr, $module, $module, $module, $module, $ruleStr);
         file_put_contents($path, $contents);
     }
@@ -293,7 +293,7 @@ class ModuleGenerator extends HyperfCommand
         }
 
         $path           = BASE_PATH . "/app/Module/$module/Action/UpdateAction.php";
-        $templateStr    = file_get_contents(BASE_PATH . "/app/Kernel/Template/UpdateActionTemplate");
+        $templateStr    = file_get_contents("../Template/UpdateActionTemplate");
         $contents       = sprintf($templateStr, $module, $module, $module, $module, $ruleStr);
         file_put_contents($path, $contents);
     }
@@ -306,7 +306,7 @@ class ModuleGenerator extends HyperfCommand
     private function generateLogic($module)
     {
         $path           = BASE_PATH . "/app/Module/$module/Logic/{$module}Logic.php";
-        $templateStr    = file_get_contents(BASE_PATH . "/app/Kernel/Template/LogicTemplate");
+        $templateStr    = file_get_contents("../Template/LogicTemplate");
         $contents       = sprintf($templateStr, $module, $module, $module, $module, $module);
         file_put_contents($path, $contents);
     }
@@ -319,7 +319,7 @@ class ModuleGenerator extends HyperfCommand
     private function generateService($module)
     {
         $path           = BASE_PATH . "/app/Module/$module/Service/{$module}Service.php";
-        $templateStr    = file_get_contents(BASE_PATH . "/app/Kernel/Template/ServiceTemplate");
+        $templateStr    = file_get_contents("../Template/ServiceTemplate");
         $contents       = sprintf($templateStr, $module, $module, $module, $module, $module);
         file_put_contents($path, $contents);
     }
@@ -334,7 +334,7 @@ class ModuleGenerator extends HyperfCommand
     private function generateDao($connection, $table, $module)
     {
         $path           = BASE_PATH . "/app/Module/$module/Dao/{$module}Dao.php";
-        $templateStr    = file_get_contents(BASE_PATH . "/app/Kernel/Template/DaoTemplate");
+        $templateStr    = file_get_contents("../Template/DaoTemplate");
         $contents       = sprintf($templateStr, $module, $module, "'$connection'", "'$table'");
         file_put_contents($path, $contents);
     }
@@ -347,7 +347,7 @@ class ModuleGenerator extends HyperfCommand
     private function generateConstant($module)
     {
         $path           = BASE_PATH . "/app/Module/$module/Constant/{$module}Constant.php";
-        $templateStr    = file_get_contents(BASE_PATH . "/app/Kernel/Template/ConstantTemplate");
+        $templateStr    = file_get_contents("../Template/ConstantTemplate");
         $contents       = sprintf($templateStr, $module, $module);
         file_put_contents($path, $contents);
     }
