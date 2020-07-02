@@ -367,6 +367,8 @@ class ModuleGenerator extends HyperfCommand
             'Constant',
         ];
 
+        if (!is_dir(BASE_PATH . "/app/Module")) mkdir(BASE_PATH . "/app/Module");
+
         mkdir(BASE_PATH . "/app/Module/$module");
 
         foreach ($directoryList as $k => $v) {
