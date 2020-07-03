@@ -17,6 +17,30 @@ class MySQLDao
     protected $table = '';
 
     /**
+     * 开启事务
+     */
+    public function beginTransaction()
+    {
+        Db::connection($this->connection)->beginTransaction();
+    }
+
+    /**
+     * 回滚事务
+     */
+    public function rollBack()
+    {
+        Db::connection($this->connection)->rollBack();
+    }
+
+    /**
+     * 提交事务
+     */
+    public function commit()
+    {
+        Db::connection($this->connection)->commit();
+    }
+
+    /**
      * 创建
      *
      * @param array $data
