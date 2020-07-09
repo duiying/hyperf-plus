@@ -25,8 +25,8 @@ class SearchAction extends AbstractController
     public $validationFactory;
 
     private $rules = [
-        'p'                                     => 'integer|min:1',
-        'size'                                  => 'integer|min:1|max:20',
+        'p'         => 'integer|min:1',
+        'size'      => 'integer|min:1|max:20',
         %s
     ];
 

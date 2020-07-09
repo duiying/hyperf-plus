@@ -115,6 +115,9 @@ class ModuleGenerator extends HyperfCommand
             // ctime、mtime
             if (in_array($v['Field'], ['ctime', 'mtime'])) continue;
 
+            // id
+            if ($v['Field'] == 'id' && $action == 'Create') continue;
+
             $rule = '';
 
             // CreateAction 和 UpdateAction 需要 required 属性
@@ -151,7 +154,7 @@ class ModuleGenerator extends HyperfCommand
     }
 
     /**
-     * 生成Logic
+     * 生成 Logic
      *
      * @param $module
      */
@@ -164,7 +167,7 @@ class ModuleGenerator extends HyperfCommand
     }
 
     /**
-     * 生成Service
+     * 生成 Service
      *
      * @param $module
      */
@@ -177,7 +180,7 @@ class ModuleGenerator extends HyperfCommand
     }
 
     /**
-     * 生成Dao
+     * 生成 Dao
      *
      * @param $connection
      * @param $table
@@ -192,7 +195,7 @@ class ModuleGenerator extends HyperfCommand
     }
 
     /**
-     * 生成Constant
+     * 生成 Constant
      *
      * @param $module
      */
