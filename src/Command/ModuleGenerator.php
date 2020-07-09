@@ -82,6 +82,11 @@ class ModuleGenerator extends HyperfCommand
         Log::info("{$module}模块已生成！");
     }
 
+    private function getRuleByTableStructure($connection, $table, $module)
+    {
+
+    }
+
     /**
      * 生成CreateAction
      *
@@ -202,8 +207,21 @@ class ModuleGenerator extends HyperfCommand
         $res            = Db::connection($connection)->select('SHOW FULL COLUMNS FROM ' . $table);
         $columnInfoList = Util::object2Array($res);
 
-        $index      = 0;
-        $ruleStr    = '';
+        $index          = 0;
+        $ruleStr        = '';
+
+        // 字段最大长度
+        $maxFieldLength = 0;
+        foreach ($columnInfoList as $k => $v) {
+            if (strlen($v['Field']) > $maxFieldLength) $maxFieldLength = strlen($v['Field']);
+        }
+
+        // 计算出 => 之前的字符串长度
+        if (($maxFieldLength + 10) % 4 == 0) {
+            $preStrLength = $maxFieldLength + 10 + 4;
+        } else {
+            $preStrLength = ceil($maxFieldLength / 4) * 4;
+        }
 
         foreach ($columnInfoList as $k => $v) {
             // ctime、mtime
@@ -222,11 +240,7 @@ class ModuleGenerator extends HyperfCommand
             }
 
             // 填充空字符串，对齐 => 用
-            if (strlen($v['Field']) < 48 - 10) {
-                $fillSpaceStr = str_repeat(' ', 48 - 10 - strlen($v['Field']));
-            } else {
-                $fillSpaceStr = ' ';
-            }
+            $fillSpaceStr = str_repeat(' ', $preStrLength - 10 - strlen($v['Field']));
 
             if ($index == 0) {
                 $ruleStr .= sprintf("'%s'" . $fillSpaceStr . "=> '%s'", $v['Field'], $rule);
