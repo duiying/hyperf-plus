@@ -14,6 +14,30 @@ class %sService
     private $dao;
 
     /**
+     * 开启事务
+     */
+    public function beginTransaction()
+    {
+        $this->dao->beginTransaction();
+    }
+
+    /**
+     * 回滚事务
+     */
+    public function rollBack()
+    {
+        $this->dao->rollBack();
+    }
+
+    /**
+     * 提交事务
+     */
+    public function commit()
+    {
+        $this->dao->commit();
+    }
+
+    /**
      * 创建
      *
      * @param $data
