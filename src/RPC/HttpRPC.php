@@ -12,7 +12,7 @@ use HyperfPlus\Util\Util;
 use Hyperf\Di\Annotation\Inject;
 
 /**
- * 基于GuzzleHTTP客户端的RPC组件
+ * 基于 GuzzleHTTP 客户端的 RPC 组件
  *
  * @author duiying <wangyaxiandev@gmail.com>
  * @package HyperfPlus\RPC
@@ -33,7 +33,7 @@ class HttpRPC
     public $client;
 
     /**
-     * 远程调用，返回data字段（Array格式）
+     * 远程调用，返回 data 字段（Array 格式）
      *
      * @param $param
      * @return mixed
@@ -46,7 +46,7 @@ class HttpRPC
     }
 
     /**
-     * 远程调用，返回json（Array格式）
+     * 远程调用，返回 json（Array 格式）
      *
      * @param $param
      * @return mixed
@@ -58,7 +58,7 @@ class HttpRPC
     }
 
     /**
-     * 获取响应数据（Array格式）
+     * 获取响应数据（Array 格式）
      *
      * @param $param
      * @return mixed

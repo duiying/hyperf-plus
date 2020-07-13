@@ -5,7 +5,7 @@ namespace HyperfPlus\Http;
 use Hyperf\Guzzle\ClientFactory;
 
 /**
- * GuzzleHTTP客户端封装类
+ * GuzzleHTTP 客户端封装类
  *
  * @author duiying <wangyaxiandev@gmail.com>
  * @package HyperfPlus\Http
@@ -23,7 +23,7 @@ class Client
     }
 
     /**
-     * 获取guzzle客户端
+     * 获取 guzzle 客户端
      *
      * @param array $options
      * @return \GuzzleHttp\Client
