@@ -8,10 +8,11 @@
 
 **env 配置**  
 
-.env 增加一项  
+.env 增加  
 
 ```
 DEBUG=true
+User-Agent=HyperfPlus Http Client
 ```
 
 **常量配置**  
@@ -163,4 +164,5 @@ return [
     ],
 ];
 ```
+
 
