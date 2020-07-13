@@ -18,16 +18,19 @@ use Hyperf\Constants\Annotation\Constants;
 class ErrorCode extends AbstractConstants
 {
     /******************** 基础错误 begin 1001 ~ 1200 ********************/
-
     /**
      * @Message("参数错误")
      */
     const PARAMS_INVALID = 1001;
 
+    /**
+     * @Message("服务异常")
+     */
+    const TRIGGER_EXCEPTION = 1002;
     /******************** 基础错误 end ********************/
 
-    /******************** Retry 组件 begin 2001 ~ 2100 ********************/
 
+    /******************** Retry 组件 begin 2001 ~ 2100 ********************/
     /**
      * @Message("重试回调无效")
      */
@@ -37,11 +40,10 @@ class ErrorCode extends AbstractConstants
      * @Message("服务内部错误，请稍后重试！")
      */
     const RETRY_ERROR = 2002;
-
     /******************** Retry 组件 end ********************/
 
-    /******************** Http RPC 组件 begin 5001 ~ 5100 ********************/
 
+    /******************** Http RPC 组件 begin 5001 ~ 5100 ********************/
     /**
      * @Message("服务内部错误，请稍后重试！")
      */
@@ -66,6 +68,5 @@ class ErrorCode extends AbstractConstants
      * @Message("服务内部错误，请稍后重试！")
      */
     const HTTP_RPC_REQUEST_ERROR = 5005;
-
     /******************** Http RPC 组件 end ********************/
 }

@@ -74,7 +74,7 @@ class AppExceptionHandler extends ExceptionHandler
         if ($throwable instanceof \Exception) {
             // 格式化输出
             $data = json_encode([
-                Constant::API_CODE      => $throwable->getCode(),
+                Constant::API_CODE      => $throwable->getCode() == 0 ? ErrorCode::TRIGGER_EXCEPTION : $throwable->getCode(),
                 Constant::API_MESSAGE   => $throwable->getMessage(),
                 Constant::API_DATA      => null
             ], JSON_UNESCAPED_UNICODE);
