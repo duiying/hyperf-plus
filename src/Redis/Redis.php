@@ -13,49 +13,48 @@ use Hyperf\Utils\ApplicationContext;
  */
 class Redis
 {
+    /**
+     * 获取 redis 实例
+     *
+     * @param string $poolName
+     * @return \Hyperf\Redis\RedisProxy|\Redis|null
+     */
+    public static function getRedis($poolName = 'default')
+    {
+        return ApplicationContext::getContainer()->get(RedisFactory::class)->get($poolName);
+    }
+
     /******************** string begin ********************/
     public function set($key, $value, $timeout = null, $poolName = 'default')
     {
-        $container = ApplicationContext::getContainer();
-        $redis = $container->get(RedisFactory::class)->get($poolName);
-        return $redis->set($key, $value, $timeout);
+        return self::getRedis($poolName)->set($key, $value, $timeout);
     }
 
     public function setNx($key, $value, $timeout = 1, $poolName = 'default')
     {
-        $container = ApplicationContext::getContainer();
-        $redis = $container->get(RedisFactory::class)->get($poolName);
-        return $redis->set($key, $value, ['nx', 'ex' => $timeout]);
+        return self::getRedis($poolName)->set($key, $value, ['nx', 'ex' => $timeout]);
     }
     /******************** string end ********************/
 
     /******************** list begin ********************/
     public function lPush($key, $value, $poolName = 'default')
     {
-        $container = ApplicationContext::getContainer();
-        $redis = $container->get(RedisFactory::class)->get($poolName);
-        return $redis->lPush($key, $value);
+        return self::getRedis($poolName)->lPush($key, $value);
     }
 
     public function lPop($key, $poolName = 'default')
     {
-        $container = ApplicationContext::getContainer();
-        $redis = $container->get(RedisFactory::class)->get($poolName);
-        return $redis->lPop($key);
+        return self::getRedis($poolName)->lPop($key);
     }
 
     public function rPush($key, $value, $poolName = 'default')
     {
-        $container = ApplicationContext::getContainer();
-        $redis = $container->get(RedisFactory::class)->get($poolName);
-        return $redis->rPush($key, $value);
+        return self::getRedis($poolName)->rPush($key, $value);
     }
 
     public function rPop($key, $poolName = 'default')
     {
-        $container = ApplicationContext::getContainer();
-        $redis = $container->get(RedisFactory::class)->get($poolName);
-        return $redis->rPop($key);
+        return self::getRedis($poolName)->rPop($key);
     }
     /******************** list end ********************/
 }
