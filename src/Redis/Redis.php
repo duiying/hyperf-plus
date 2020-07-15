@@ -24,35 +24,52 @@ class Redis
         return ApplicationContext::getContainer()->get(RedisFactory::class)->get($poolName);
     }
 
+    /**
+     * 删除 key
+     *
+     * @param $key
+     * @param string $poolName
+     * @return int
+     */
+    public static function del($key, $poolName = 'default')
+    {
+        return self::getRedis($poolName)->del($key);
+    }
+
     /******************** string begin ********************/
-    public function set($key, $value, $timeout = null, $poolName = 'default')
+    public static function set($key, $value, $timeout = null, $poolName = 'default')
     {
         return self::getRedis($poolName)->set($key, $value, $timeout);
     }
 
-    public function setNx($key, $value, $timeout = 1, $poolName = 'default')
+    public static function get($key, $poolName = 'default')
+    {
+        return self::getRedis($poolName)->get($key);
+    }
+
+    public static function setNx($key, $value, $timeout = 1, $poolName = 'default')
     {
         return self::getRedis($poolName)->set($key, $value, ['nx', 'ex' => $timeout]);
     }
     /******************** string end ********************/
 
     /******************** list begin ********************/
-    public function lPush($key, $value, $poolName = 'default')
+    public static function lPush($key, $value, $poolName = 'default')
     {
         return self::getRedis($poolName)->lPush($key, $value);
     }
 
-    public function lPop($key, $poolName = 'default')
+    public static function lPop($key, $poolName = 'default')
     {
         return self::getRedis($poolName)->lPop($key);
     }
 
-    public function rPush($key, $value, $poolName = 'default')
+    public static function rPush($key, $value, $poolName = 'default')
     {
         return self::getRedis($poolName)->rPush($key, $value);
     }
 
-    public function rPop($key, $poolName = 'default')
+    public static function rPop($key, $poolName = 'default')
     {
         return self::getRedis($poolName)->rPop($key);
     }

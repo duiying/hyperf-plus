@@ -2,6 +2,8 @@
 
 namespace HyperfPlus\Util;
 
+use HyperfPlus\Redis\Redis;
+
 /**
  * 常用工具类
  *
@@ -81,5 +83,30 @@ class Util
     public static function getTimestampWithMilliSecond()
     {
         return time() . '.' . str_pad(intval(explode(' ', microtime())[0] * 1000), 3, '0', STR_PAD_LEFT);
+    }
+
+    /**
+     * 获取 redis 分布式锁
+     *
+     * @param $key
+     * @param int $timeout
+     * @param string $poolName
+     * @return bool
+     */
+    public static function getLock($key, $timeout = 1, $poolName = 'default')
+    {
+        return Redis::setNx($key, 1, $timeout, $poolName);
+    }
+
+    /**
+     * 删除 redis 分布式锁
+     *
+     * @param $key
+     * @param string $poolName
+     * @return int
+     */
+    public static function delLock($key, $poolName = 'default')
+    {
+        return Redis::del($key, $poolName);
     }
 }
