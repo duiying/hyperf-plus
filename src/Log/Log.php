@@ -14,31 +14,31 @@ class Log
 {
     public static function info($message, array $context = [], $name = 'app')
     {
-        $logger = ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get($name, 'info');
-        $logger->info($message, $context);
+        self::getLogger($name, 'info')->info($message, $context);
     }
 
     public static function error($message, array $context = [], $name = 'app')
     {
-        $logger = ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get($name, 'error');
-        $logger->error($message, $context);
+        self::getLogger($name, 'error')->error($message, $context);
     }
 
     public static function debug($message, array $context = [], $name = 'app')
     {
-        $logger = ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get($name, 'debug');
-        $logger->debug($message, $context);
+        self::getLogger($name, 'debug')->debug($message, $context);
     }
 
     public static function warning($message, array $context = [], $name = 'app')
     {
-        $logger = ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get($name, 'warning');
-        $logger->warning($message, $context);
+        self::getLogger($name, 'warning')->warning($message, $context);
     }
 
     public static function notice($message, array $context = [], $name = 'app')
     {
-        $logger = ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get($name, 'notice');
-        $logger->notice($message, $context);
+        self::getLogger($name, 'notice')->notice($message, $context);
+    }
+
+    public static function getLogger($name = 'app', $group = 'info')
+    {
+        return ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get($name, $group);
     }
 }

@@ -123,22 +123,24 @@ class HttpRPC
 
         // HTTP 状态码非 200
         if ($response->getStatusCode() != 200) {
-            Log::error('HTTP RPC Response 状态码错误！', ['status_code' => $response->getStatusCode(), 'args' => func_get_args()]);
+            Log::error('HTTP RPC Response 状态码错误！', ['statusCode' => $response->getStatusCode(), 'args' => func_get_args()]);
             throw new HttpRPCException(ErrorCode::HTTP_RPC_SERVER_RESPONSE_CODE_ERROR);
         }
 
         $jsonStr = $response->getBody()->getContents();
 
+        // 返回内容为空
         if (empty($jsonStr)) throw new HttpRPCException(ErrorCode::HTTP_RPC_RESPONSE_EMPTY_ERROR);
 
         // json 转 array
         $responseArr = json_decode($jsonStr, true);
 
+        // 返回内容转成数组为空
         if (empty($responseArr)) throw new HttpRPCException(ErrorCode::HTTP_RPC_RESPONSE_EMPTY_ARRAY_ERROR);
 
-        // 检查 code、msg、data 是否存在
+        // 检查 code、msg、data 是否完整
         if (!isset($responseArr[Constant::API_CODE]) || !isset($responseArr[Constant::API_MESSAGE]) || !isset($responseArr[Constant::API_DATA])) {
-            Log::error('code、msg、data信息不完整', ['responseArr' => $responseArr, 'args' => func_get_args()]);
+            Log::error('code、msg、data 信息不完整', ['responseArr' => $responseArr, 'args' => func_get_args()]);
             throw new HttpRPCException(ErrorCode::HTTP_RPC_RESPONSE_JSON_NOT_COMPLETE_ERROR);
         }
 
