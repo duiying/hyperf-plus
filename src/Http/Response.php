@@ -33,11 +33,11 @@ class Response
     /**
      * API 成功响应数据
      *
-     * @param string $msg
      * @param null $data
+     * @param string $msg
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function success($msg = '', $data = null)
+    public function success($data = null, $msg = '')
     {
         return $this->response->json([Constant::API_CODE => 0, Constant::API_MESSAGE => $msg, Constant::API_DATA => $data]);
     }
