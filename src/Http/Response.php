@@ -7,7 +7,7 @@ use Hyperf\HttpServer\Contract\ResponseInterface;
 use Psr\Container\ContainerInterface;
 
 /**
- * API响应数据封装类
+ * API 响应数据封装类
  *
  * @author duiying <wangyaxiandev@gmail.com>
  * @package HyperfPlus\Http
