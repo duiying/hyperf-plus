@@ -34,5 +34,10 @@
     "psr-4": {
       "HyperfPlus\\": "src/"
     }
+  },
+  "extra": {
+    "hyperf": {
+      "config": "HyperfPlus\\ConfigProvider\\ConfigProvider"
+    }
   }
 }
