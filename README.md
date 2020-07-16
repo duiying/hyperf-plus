@@ -117,20 +117,6 @@ use Hyperf\HttpServer\Router\Router;
 Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'HyperfPlus\Controller\IndexController@handle');
 ```
 
-**命令配置**  
-
-config/autoload/commands.php  
-
-```php
-<?php
-
-declare(strict_types=1);
-
-return [
-    \HyperfPlus\Command\ModuleGenerator::class,
-];
-```
-
 **异常处理器配置**  
 
 config/autoload/exceptions.php  
