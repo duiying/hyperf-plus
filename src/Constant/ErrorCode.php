@@ -10,9 +10,6 @@ use Hyperf\Constants\Annotation\Constants;
  *
  * @author duiying <wangyaxiandev@gmail.com>
  * @package HyperfPlus\Constant
- */
-
-/**
  * @Constants
  */
 class ErrorCode extends AbstractConstants
