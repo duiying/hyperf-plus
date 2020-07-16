@@ -22,6 +22,12 @@ use Psr\Http\Server\RequestHandlerInterface;
 class PreventRepeatMiddleware implements MiddlewareInterface
 {
     /**
+     * 2 秒内只能请求一次
+     * @var int
+     */
+    private $limit = 2;
+
+    /**
      * @var ContainerInterface
      */
     protected $container;
@@ -55,7 +61,7 @@ class PreventRepeatMiddleware implements MiddlewareInterface
         // 根据请求 path 和请求数据生成 redis key
         $key = $requestPath . ':' . md5(serialize($requestData));
 
-        if (!Util::getLock($key, 1)) {
+        if (!Util::getLock($key, $this->limit)) {
             throw new RepeatException(ErrorCode::REPEAT_EXCEPTION);
         }
 
