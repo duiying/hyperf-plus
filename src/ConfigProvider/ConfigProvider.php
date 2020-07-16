@@ -19,7 +19,7 @@ class ConfigProvider
             'annotations' => [
                 'scan' => [
                     'paths' => [
-                        __DIR__,
+                        dirname(__DIR__),
                     ],
                 ],
             ],
