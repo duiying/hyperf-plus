@@ -3,14 +3,22 @@
 namespace HyperfPlus\Middleware;
 
 use Hyperf\HttpServer\Contract\RequestInterface;
+use HyperfPlus\Constant\ErrorCode;
+use HyperfPlus\Exception\RepeatException;
 use HyperfPlus\Http\Response;
-use HyperfPlus\Log\StdoutLog;
+use HyperfPlus\Util\Util;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+/**
+ * 防重放中间件
+ *
+ * @author duiying <wangyaxiandev@gmail.com>
+ * @package HyperfPlus\Middleware
+ */
 class PreventRepeatMiddleware implements MiddlewareInterface
 {
     /**
@@ -30,22 +38,25 @@ class PreventRepeatMiddleware implements MiddlewareInterface
 
     public function __construct(ContainerInterface $container, Response $response, RequestInterface $request)
     {
-        $this->container = $container;
-        $this->response = $response;
-        $this->request = $request;
+        $this->container    = $container;
+        $this->response     = $response;
+        $this->request      = $request;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $requestData    = $this->request->all();
-        $requestUrl     = $this->request->url();
-
-        StdoutLog::print($requestData);
-        StdoutLog::print($requestUrl);
-
+        $requestPath    = $this->request->getUri()->getPath();
 
         if (empty($requestData)) {
             return $handler->handle($request);
+        }
+
+        // 根据请求 path 和请求数据生成 redis key
+        $key = $requestPath . ':' . md5(serialize($requestData));
+
+        if (!Util::getLock($key, 1)) {
+            throw new RepeatException(ErrorCode::REPEAT_EXCEPTION);
         }
 
         return $handler->handle($request);

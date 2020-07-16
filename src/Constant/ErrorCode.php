@@ -27,6 +27,11 @@ class ErrorCode extends AbstractConstants
      * @Message("服务异常")
      */
     const TRIGGER_EXCEPTION = 1002;
+
+    /**
+     * @Message("请勿重复操作")
+     */
+    const REPEAT_EXCEPTION = 1003;
     /******************** 基础错误 end ********************/
 
 
