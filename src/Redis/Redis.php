@@ -36,7 +36,7 @@ class Redis
         return self::getRedis($poolName)->del($key);
     }
 
-    /******************** string begin ********************/
+    /******************** string begin ********************************************************************************/
     public static function set($key, $value, $timeout = null, $poolName = 'default')
     {
         return self::getRedis($poolName)->set($key, $value, $timeout);
@@ -51,9 +51,10 @@ class Redis
     {
         return self::getRedis($poolName)->set($key, $value, ['nx', 'ex' => $timeout]);
     }
-    /******************** string end ********************/
+    /******************** string end **********************************************************************************/
 
-    /******************** list begin ********************/
+
+    /******************** list begin **********************************************************************************/
     public static function lPush($key, $value, $poolName = 'default')
     {
         return self::getRedis($poolName)->lPush($key, $value);
@@ -73,5 +74,5 @@ class Redis
     {
         return self::getRedis($poolName)->rPop($key);
     }
-    /******************** list end ********************/
+    /******************** list end ************************************************************************************/
 }

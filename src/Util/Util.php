@@ -109,4 +109,28 @@ class Util
     {
         return Redis::del($key, $poolName);
     }
+
+    /**
+     * 入队（基于 redis）
+     *
+     * @param $key
+     * @param array $value
+     * @return bool|int
+     */
+    public static function enqueueByRedis($key, $value = [])
+    {
+        return Redis::lPush($key, json_encode($value));
+    }
+
+    /**
+     * 出队（基于 redis）
+     *
+     * @param $key
+     * @return mixed
+     */
+    public static function dequeueByRedis($key)
+    {
+        $data = Redis::rPop($key);
+        return json_decode($data, true);
+    }
 }
