@@ -74,5 +74,22 @@ class Redis
     {
         return self::getRedis($poolName)->rPop($key);
     }
+
+    public static function lLen($key, $poolName = 'default')
+    {
+        return self::getRedis($poolName)->lLen($key);
+    }
     /******************** list end ************************************************************************************/
+
+    /******************** zset begin **********************************************************************************/
+    public static function zAdd($key, $score, $value, $options = [], $poolName = 'default')
+    {
+        return self::getRedis($poolName)->zAdd($key, $options, $score, $value);
+    }
+
+    public static function zRangeByScore($key, $start, $end, $options = array(), $poolName = 'default')
+    {
+        return self::getRedis($poolName)->zRangeByScore($key, $start, $end, $options);
+    }
+    /******************** zset end ************************************************************************************/
 }
