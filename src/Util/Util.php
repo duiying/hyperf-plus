@@ -135,4 +135,15 @@ class Util
         $data = Redis::instance($poolName)->rPop($key);
         return json_decode($data, true);
     }
+
+    /**
+     * 将数组转换为对应的 redis key
+     *
+     * @param array $data
+     * @return string
+     */
+    public static function generateRedisKeyByArrayData($data = [])
+    {
+        return md5(serialize($data));
+    }
 }
