@@ -95,7 +95,7 @@ class Util
      */
     public static function getLock($key, $timeout = 1, $poolName = 'default')
     {
-        return Redis::setNx($key, 1, $timeout, $poolName);
+        return Redis::instance($poolName)->set($key, 1, ['nx', 'ex' => $timeout]);
     }
 
     /**
@@ -107,7 +107,7 @@ class Util
      */
     public static function delLock($key, $poolName = 'default')
     {
-        return Redis::del($key, $poolName);
+        return Redis::instance($poolName)->del($key);
     }
 
     /**
@@ -115,22 +115,24 @@ class Util
      *
      * @param $key
      * @param array $value
+     * @param string $poolName
      * @return bool|int
      */
-    public static function enqueueByRedis($key, $value = [])
+    public static function enqueueByRedis($key, $value = [], $poolName = 'default')
     {
-        return Redis::lPush($key, json_encode($value));
+        return Redis::instance($poolName)->lPush($key, json_encode($value));
     }
 
     /**
      * 出队（基于 redis）
      *
      * @param $key
+     * @param string $poolName
      * @return mixed
      */
-    public static function dequeueByRedis($key)
+    public static function dequeueByRedis($key, $poolName = 'default')
     {
-        $data = Redis::rPop($key);
+        $data = Redis::instance($poolName)->rPop($key);
         return json_decode($data, true);
     }
 }
