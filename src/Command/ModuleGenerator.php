@@ -3,6 +3,7 @@
 namespace HyperfPlus\Command;
 
 use HyperfPlus\Log\Log;
+use HyperfPlus\Log\StdoutLog;
 use HyperfPlus\Util\Util;
 use Hyperf\Command\Command as HyperfCommand;
 use Hyperf\Command\Annotation\Command;
@@ -79,7 +80,7 @@ class ModuleGenerator extends HyperfCommand
         // 生成 Constant
         $this->generateConstant($module);
 
-        Log::info("{$module}模块已生成！");
+        StdoutLog::print("{$module}模块已生成！");
     }
 
     /**
