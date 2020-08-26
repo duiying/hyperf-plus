@@ -35,13 +35,16 @@ class HttpRPC
     /**
      * 远程调用，返回 data 字段（Array 格式）
      *
-     * @param $param
+     * @param array $requestData
+     * @param array $options
      * @return mixed
      * @throws \Exception
      */
-    public function call($param)
+    public function call($requestData = [], $options = [])
     {
-        $responseArr = $this->getResponseArr($param);
+        // 增加链路追踪参数
+        $requestData['traceId'] = Util::getTraceId();
+        $responseArr = $this->getResponseArr($requestData, $options);
         return $responseArr[Constant::API_DATA];
     }
 
@@ -60,31 +63,32 @@ class HttpRPC
     /**
      * 获取响应数据（Array 格式）
      *
-     * @param $param
+     * @param array $requestData
+     * @param array $options
      * @return mixed
      * @throws \Exception
      */
-    public function getResponseArr($param)
+    public function getResponseArr($requestData = [], $options = [])
     {
-        // HTTP 请求方式
-        $method                 = isset($param['method']) ? $param['method'] : Constant::METHOD_GET;
+        // HTTP 请求方式（默认为 GET 请求）
+        $method                 = isset($options['method']) ? $options['method'] : Constant::METHOD_GET;
         // 接口地址
-        $uri                    = $param['uri'];
+        $uri                    = $options['uri'];
         // 服务响应超时时间（毫秒）
-        $timeout                = isset($param['timeout']) ? $param['timeout'] : Constant::DEFAULT_HTTP_TIMEOUT;
+        $timeout                = isset($options['timeout']) ? $options['timeout'] : Constant::DEFAULT_HTTP_TIMEOUT;
         // 连接超时时间（毫秒）
-        $connectTimeout         = isset($param['connect_timeout']) ? $param['connect_timeout'] : Constant::DEFAULT_HTTP_CONNECT_TIMEOUT;
+        $connectTimeout         = isset($options['connect_timeout']) ? $options['connect_timeout'] : Constant::DEFAULT_HTTP_CONNECT_TIMEOUT;
         // 错误重试次数（0 表示不执行重试机制）
-        $retry                  = isset($param['retry']) ? $param['retry'] : 0;
+        $retry                  = isset($options['retry']) ? $options['retry'] : 0;
         // headers
-        $headers                = isset($param['headers']) ? $param['headers'] : [];
+        $headers                = isset($options['headers']) ? $options['headers'] : [];
         if (!isset($headers['User-Agent'])) {
             $headers['User-Agent'] = env('User-Agent', Constant::DEFAULT_USER_AGENT);
         }
 
         // 发起 HTTP 请求
-        return Retry::run(function () use ($method, $uri, $timeout, $connectTimeout, $headers) {
-            return $this->request($method, $uri, $timeout, $connectTimeout, $headers);
+        return Retry::run(function () use ($method, $uri, $timeout, $connectTimeout, $headers, $requestData) {
+            return $this->request($method, $uri, $timeout, $connectTimeout, $headers, $requestData);
         }, $retry);
     }
 
@@ -96,10 +100,11 @@ class HttpRPC
      * @param $timeout
      * @param $connectTimeout
      * @param $headers
+     * @param array $requestData
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function request($method, $uri, $timeout, $connectTimeout, $headers)
+    public function request($method, $uri, $timeout, $connectTimeout, $headers, $requestData = [])
     {
         $options = [
             'connect_timeout'   => bcdiv($connectTimeout, 1000, 2),
@@ -110,16 +115,25 @@ class HttpRPC
 
         $client = $this->client->getClient($options);
 
-        $beginTime = Util::getTimestampWithMilliSecond();
+        // 日志记录请求开始时间
+        $beginTime = microtime(true);
         Log::info('HTTP RPC begin', ['args' => func_get_args(), 'time' => Util::now(), 'beginTime' => $beginTime]);
 
         try {
-            $response = $client->request($method, $uri);
+            if ($method === Constant::METHOD_GET) {
+                $response = $client->request($method, $uri, ['query' => $requestData]);
+            } else {
+                $response = $client->request($method, $uri, ['form_params' => $requestData]);
+            }
         } catch (\Exception $exception) {
             // 远程 HTTP 服务响应超时、远程 HTTP 服务挂掉（连接失败）等情况
-            Log::error('HTTP RPC Error', ['code' => $exception->getCode(), 'msg' => $exception->getMessage(), 'args' => func_get_args()]);
+            Log::error('HTTP RPC Error！', ['code' => $exception->getCode(), 'msg' => $exception->getMessage(), 'args' => func_get_args()]);
             throw new HttpRPCException(ErrorCode::HTTP_RPC_REQUEST_ERROR);
         }
+
+        // 日志记录请求结束时间
+        $finishTime = microtime(true);
+        Log::info('HTTP RPC finish', ['args' => func_get_args(), 'time' => Util::now(), 'finishTime' => $finishTime, 'used' => bcsub($finishTime, $beginTime, 3)]);
 
         // HTTP 状态码非 200
         if ($response->getStatusCode() != 200) {
@@ -140,12 +154,14 @@ class HttpRPC
 
         // 检查 code、msg、data 是否完整
         if (!isset($responseArr[Constant::API_CODE]) || !isset($responseArr[Constant::API_MESSAGE]) || !isset($responseArr[Constant::API_DATA])) {
-            Log::error('code、msg、data 信息不完整', ['responseArr' => $responseArr, 'args' => func_get_args()]);
+            Log::error('code、msg、data 信息不完整！', ['responseArr' => $responseArr, 'args' => func_get_args()]);
             throw new HttpRPCException(ErrorCode::HTTP_RPC_RESPONSE_JSON_NOT_COMPLETE_ERROR);
         }
 
-        $finishTime = Util::getTimestampWithMilliSecond();
-        Log::info('HTTP RPC finish', ['args' => func_get_args(), 'time' => Util::now(), 'finishTime' => $finishTime, 'used' => sprintf('%dms', $finishTime * 1000 - $beginTime * 1000)]);
+        if ($responseArr[Constant::API_CODE] !== 0) {
+            Log::error('远程服务抛出异常！', ['responseArr' => $responseArr, 'args' => func_get_args()]);
+            throw new \Exception($responseArr[Constant::API_CODE], $responseArr[Constant::API_MESSAGE]);
+        }
 
         return (array)$responseArr;
     }

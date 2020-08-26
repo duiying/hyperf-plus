@@ -17,9 +17,9 @@ User-Agent=HyperfPlus Http Client
 
 **常量配置**  
 
-app/Constant 目录下新建 AppConstant.php、AppErrorCode.php、RedisKeyConst.php。  
+app/Constant 目录下新建 CommonConstant.php、AppErrorCode.php、RedisKeyConst.php。  
 
-app/Constant/AppConstant.php  
+app/Constant/CommonConstant.php  
 
 ```php
 <?php
@@ -27,12 +27,12 @@ app/Constant/AppConstant.php
 namespace App\Constant;
 
 /**
- * 应用常量类
+ * 公共常量类
  *
  * @author Yaxian <wangyaxiandev@gmail.com>
  * @package App\Constant
  */
-class AppConstant
+class CommonConstant
 {
 
 }

@@ -76,13 +76,13 @@ class Util
     }
 
     /**
-     * 获取格式化时间戳（格式：1591927349.686）
+     * 获取 traceId
      *
      * @return string
      */
-    public static function getTimestampWithMilliSecond()
+    public static function getTraceId()
     {
-        return time() . '.' . str_pad(intval(explode(' ', microtime())[0] * 1000), 3, '0', STR_PAD_LEFT);
+        return bin2hex(openssl_random_pseudo_bytes(16));
     }
 
     /**
