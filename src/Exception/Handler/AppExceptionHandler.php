@@ -50,6 +50,8 @@ class AppExceptionHandler extends ExceptionHandler
             // 阻止异常冒泡
             $this->stopPropagation();
 
+            Log::error('业务抛出异常！', ['code' => $throwable->getCode(), 'msg' => $throwable->getMessage(), 'trace' => $throwable->getTrace()]);
+
             return $response->withStatus(200)->withBody(new SwooleStream($data));
         }
 
@@ -65,7 +67,7 @@ class AppExceptionHandler extends ExceptionHandler
             // 阻止异常冒泡
             $this->stopPropagation();
 
-            Log::error('Http RPC 失败！', ['code' => $throwable->getCode(), 'msg' => $throwable->getMessage()]);
+            Log::error('Http RPC 失败！', ['code' => $throwable->getCode(), 'msg' => $throwable->getMessage(), 'trace' => $throwable->getTrace()]);
 
             return $response->withStatus(200)->withBody(new SwooleStream($data));
         }
@@ -86,6 +88,8 @@ class AppExceptionHandler extends ExceptionHandler
 
             return $response->withStatus(200)->withBody(new SwooleStream($data));
         }
+
+        Log::error('接入层未捕获到的异常', ['code' => $throwable->getCode(), 'msg' => $throwable->getMessage(), 'trace' => $throwable->getTrace()]);
 
         // 交给下一个异常处理器
         return $response;
