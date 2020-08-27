@@ -82,7 +82,7 @@ class AppExceptionHandler extends ExceptionHandler
             // 阻止异常冒泡
             $this->stopPropagation();
 
-            Log::error('服务产生异常！', ['code' => $throwable->getCode(), 'msg' => $throwable->getMessage()]);
+            Log::error('服务产生异常！', ['code' => $throwable->getCode(), 'msg' => $throwable->getMessage(), 'trace' => $throwable->getTrace()]);
 
             return $response->withStatus(200)->withBody(new SwooleStream($data));
         }
