@@ -146,4 +146,24 @@ class Util
     {
         return md5(serialize($data));
     }
+
+    /**
+     * 清洗请求数据
+     *
+     * @param $requestData
+     * @param $rules
+     * @return array
+     */
+    public static function sanitize($requestData, $rules)
+    {
+        if (empty($requestData) || empty($rules)) return [];
+
+        $sanitizedData = [];
+
+        foreach ($requestData as $k => $v) {
+            if (isset($rules[$k])) $sanitizedData[$k] = $v;
+        }
+
+        return $sanitizedData;
+    }
 }
