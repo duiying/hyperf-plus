@@ -27,7 +27,7 @@ class SearchAction extends AbstractController
 
     private $rules = [
         'p'             => 'integer|min:1',
-        'size'          => 'integer|min:1|max:20',
+        'size'          => 'integer|min:1',
         %s
     ];
 
