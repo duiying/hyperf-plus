@@ -35,9 +35,9 @@ class Util
     public static function formatSearchRes($p, $size, $total, $list)
     {
         return [
-            'p'         => $p,
-            'size'      => $size,
-            'total'     => $total,
+            'p'         => (string)$p,
+            'size'      => (string)$size,
+            'total'     => (string)$total,
             'next'      => $p * $size < $total ? 1 : 0,
             'list'      => $list
         ];
