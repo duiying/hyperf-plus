@@ -119,12 +119,18 @@ class ModuleGenerator extends HyperfCommand
             // id
             if ($v['Field'] == 'id' && $action == 'Create') continue;
 
+            // FindAction 只需要 id
+            if ($action == 'Find' && $v['Field'] != 'id') continue;
+
             $rule = '';
 
             // CreateAction 和 UpdateAction 需要 required 属性
             if (in_array($action, ['Create', 'Update']) && isset($v['Null']) && $v['Null'] === 'NO') {
                 $rule = 'required|';
             }
+
+            // FindAction 的 id 需要 required 属性
+            if ($action == 'Find') $rule = 'required|';
 
             if (Util::contain($v['Type'], 'int')) {
                 $rule .= 'integer';
