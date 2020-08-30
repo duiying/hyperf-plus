@@ -160,7 +160,7 @@ class HttpRPC
 
         if ($responseArr[Constant::API_CODE] !== 0) {
             Log::error('远程服务抛出异常！', ['responseArr' => $responseArr, 'args' => func_get_args()]);
-            throw new \Exception($responseArr[Constant::API_CODE], $responseArr[Constant::API_MESSAGE]);
+            throw new HttpRPCException($responseArr[Constant::API_CODE], $responseArr[Constant::API_MESSAGE]);
         }
 
         return (array)$responseArr;
