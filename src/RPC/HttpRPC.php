@@ -153,7 +153,7 @@ class HttpRPC
         if (empty($responseArr)) throw new HttpRPCException(ErrorCode::HTTP_RPC_RESPONSE_EMPTY_ARRAY_ERROR);
 
         // 检查 code、msg、data 是否完整
-        if (!isset($responseArr[Constant::API_CODE]) || !isset($responseArr[Constant::API_MESSAGE]) || !isset($responseArr[Constant::API_DATA])) {
+        if (!array_key_exists(Constant::API_CODE, $responseArr) || !array_key_exists(Constant::API_MESSAGE, $responseArr) || !array_key_exists(Constant::API_DATA, $responseArr)) {
             Log::error('code、msg、data 信息不完整！', ['responseArr' => $responseArr, 'args' => func_get_args()]);
             throw new HttpRPCException(ErrorCode::HTTP_RPC_RESPONSE_JSON_NOT_COMPLETE_ERROR);
         }
