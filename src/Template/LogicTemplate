@@ -41,6 +41,20 @@ class %sLogic
     }
 
     /**
+     * 更新字段
+     *
+     * @param $requestData
+     * @return int
+     */
+    public function updateField($requestData)
+    {
+        $data   = $requestData;
+        $id     = $requestData['id'];
+        unset($data['id']);
+        return $this->service->update(['id' => $id], $data);
+    }
+
+    /**
      * 查找
      *
      * @param $requestData

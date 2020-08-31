@@ -71,6 +71,8 @@ class ModuleGenerator extends HyperfCommand
         $this->generateActionByTableStructure($connection, $table, $module, 'Search');
         // 生成 FindAction
         $this->generateActionByTableStructure($connection, $table, $module, 'Find');
+        // 生成 UpdateFieldAction
+        $this->generateActionByTableStructure($connection, $table, $module, 'UpdateField');
         // 生成 Logic
         $this->generateLogic($module);
         // 生成 Service
@@ -120,7 +122,7 @@ class ModuleGenerator extends HyperfCommand
             if ($v['Field'] == 'id' && $action == 'Create') continue;
 
             // FindAction 只需要 id
-            if ($action == 'Find' && $v['Field'] != 'id') continue;
+            if (in_array($action, ['Find', 'UpdateField']) && $v['Field'] != 'id') continue;
 
             $rule = '';
 
@@ -130,7 +132,7 @@ class ModuleGenerator extends HyperfCommand
             }
 
             // FindAction 的 id 需要 required 属性
-            if ($action == 'Find') $rule = 'required|';
+            if (in_array($action, ['Find', 'UpdateField'])) $rule = 'required|';
 
             if (Util::contain($v['Type'], 'int')) {
                 $rule .= 'integer';
