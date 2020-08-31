@@ -121,6 +121,9 @@ class ModuleGenerator extends HyperfCommand
             // id
             if ($v['Field'] == 'id' && $action == 'Create') continue;
 
+            // status
+            if ($v['Field'] == 'status' && in_array($action, ['Create', 'Update'])) continue;
+
             // FindAction 只需要 id
             if (in_array($action, ['Find', 'UpdateField']) && $v['Field'] != 'id') continue;
 
