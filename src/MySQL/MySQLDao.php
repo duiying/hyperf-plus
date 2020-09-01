@@ -75,7 +75,16 @@ class MySQLDao
         if ($offset)    $table->offset($offset);
         if ($size)      $table->limit($size);
 
-        return $table->get($columns)->toArray();
+        $list = $table->get($columns)->toArray();
+
+        // 对象转数组
+        if (!empty($list)) {
+            array_walk($list, function (&$item) {
+                $item = (array)$item;
+            });
+        }
+
+        return $list;
     }
 
     /**
