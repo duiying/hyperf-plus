@@ -124,6 +124,9 @@ class ModuleGenerator extends HyperfCommand
             // status
             if ($v['Field'] == 'status' && in_array($action, ['Create', 'Update'])) continue;
 
+            // sort
+            if ($v['Field'] == 'sort' && !in_array($action, ['Create', 'Update', 'UpdateField'])) continue;
+
             // FindAction 只需要 id
             if (in_array($action, ['Find', 'UpdateField']) && $v['Field'] != 'id') continue;
 
@@ -131,7 +134,7 @@ class ModuleGenerator extends HyperfCommand
 
             // CreateAction 和 UpdateAction 需要 required 属性
             if (in_array($action, ['Create', 'Update']) && isset($v['Null']) && $v['Null'] === 'NO') {
-                $rule = 'required|';
+                if (!in_array($v['Field'], ['sort'])) $rule = 'required|';
             }
 
             // FindAction 的 id 需要 required 属性
@@ -146,6 +149,8 @@ class ModuleGenerator extends HyperfCommand
             } else {
                 $rule .= 'string';
             }
+
+            if ($v['Field'] == 'sort') $rule .= '|min:1|max:999';
 
             // 填充空字符串，对齐 => 用
             $fillSpaceStr = str_repeat(' ', $preStrLength - 10 - strlen($v['Field']));
