@@ -108,11 +108,7 @@ class ModuleGenerator extends HyperfCommand
         }
 
         // 计算出 => 之前的字符串长度
-        if (($maxFieldLength + 10) % 4 == 0) {
-            $preStrLength = $maxFieldLength + 4 + 12;
-        } else {
-            $preStrLength = (ceil($maxFieldLength / 4) + 1) * 4 + 12;
-        }
+        $preStrLength = (ceil($maxFieldLength / 4) + 1) * 4 + 12;
 
         foreach ($columnInfoList as $k => $v) {
             // ctime、mtime
@@ -156,7 +152,11 @@ class ModuleGenerator extends HyperfCommand
             $fillSpaceStr = str_repeat(' ', $preStrLength - 10 - strlen($v['Field']));
 
             if ($index == 0) {
-                $ruleStr .= sprintf("'%s'" . $fillSpaceStr . "=> '%s'", $v['Field'], $rule);
+                if (!in_array($action, ['Find', 'UpdateField'])) {
+                    $ruleStr .= sprintf("'%s'" . $fillSpaceStr . "=> '%s'", $v['Field'], $rule);
+                } else {
+                    $ruleStr .= sprintf("'%s' => '%s'", $v['Field'], $rule);
+                }
             } else {
                 $ruleStr .= sprintf(",\n" . str_repeat(' ', 8) . "'%s'" . $fillSpaceStr . "=> '%s'", $v['Field'], $rule);
             }
