@@ -73,23 +73,19 @@ class AppExceptionHandler extends ExceptionHandler
         }
 
         // 其它异常
-        if ($throwable instanceof \Exception) {
-            // 格式化输出
-            $data = json_encode([
-                Constant::API_CODE      => $throwable->getCode() == 0 ? ErrorCode::TRIGGER_EXCEPTION : $throwable->getCode(),
-                Constant::API_MESSAGE   => $throwable->getMessage(),
-                Constant::API_DATA      => null
-            ], JSON_UNESCAPED_UNICODE);
+        // 格式化输出
+        $data = json_encode([
+            Constant::API_CODE      => $throwable->getCode() == 0 ? ErrorCode::TRIGGER_EXCEPTION : $throwable->getCode(),
+            Constant::API_MESSAGE   => '服务产生错误！原因：'. $throwable->getMessage(),
+            Constant::API_DATA      => null
+        ], JSON_UNESCAPED_UNICODE);
 
-            // 阻止异常冒泡
-            $this->stopPropagation();
+        // 阻止异常冒泡
+        $this->stopPropagation();
 
-            Log::error('服务产生异常！', ['code' => $throwable->getCode(), 'msg' => $throwable->getMessage(), 'trace' => $throwable->getTrace()]);
+        Log::error('服务产生错误！', ['code' => $throwable->getCode(), 'msg' => $throwable->getMessage(), 'trace' => $throwable->getTrace()]);
 
-            return $response->withStatus(200)->withBody(new SwooleStream($data));
-        }
-
-        Log::error('接入层未捕获到的异常', ['code' => $throwable->getCode(), 'msg' => $throwable->getMessage(), 'trace' => $throwable->getTrace()]);
+        return $response->withStatus(200)->withBody(new SwooleStream($data));
 
         // 交给下一个异常处理器
         return $response;
