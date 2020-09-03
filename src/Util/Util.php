@@ -166,4 +166,17 @@ class Util
 
         return $sanitizedData;
     }
+
+    /**
+     * ids 转为 ID 数组
+     *
+     * @param $ids
+     * @return array|false|string[]
+     */
+    public static function ids2IdArr($ids)
+    {
+        $ids = rtrim($ids, ',');
+        if (empty($ids)) return [];
+        return explode(',', $ids);
+    }
 }
