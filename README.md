@@ -49,13 +49,6 @@ use Hyperf\Constants\AbstractConstants;
 use Hyperf\Constants\Annotation\Constants;
 
 /**
- * 应用错误码类
- *
- * @author Yaxian <wangyaxiandev@gmail.com>
- * @package App\Constant
- */
-
-/**
  * @Constants
  */
 class AppErrorCode extends AbstractConstants
