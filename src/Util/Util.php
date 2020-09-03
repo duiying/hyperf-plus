@@ -179,4 +179,19 @@ class Util
         if (empty($ids)) return [];
         return explode(',', $ids);
     }
+
+    /**
+     * 对象数组转数组
+     *
+     * @param array $objList
+     * @return array
+     */
+    public static function objArr2Arr($objList = [])
+    {
+        if (empty($objList)) return [];
+
+        array_walk($objList, function (&$obj) {
+            $obj = (array)$obj;
+        });
+    }
 }
