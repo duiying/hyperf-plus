@@ -22,8 +22,7 @@ class %sLogic
      */
     public function create($requestData)
     {
-        $data = $requestData;
-        return $this->service->create($data);
+        return $this->service->create($requestData);
     }
 
     /**
@@ -34,10 +33,9 @@ class %sLogic
      */
     public function update($requestData)
     {
-        $data   = $requestData;
-        $id     = $requestData['id'];
-        unset($data['id']);
-        return $this->service->update(['id' => $id], $data);
+        $id = $requestData['id'];
+        unset($requestData['id']);
+        return $this->service->update(['id' => $id], $requestData);
     }
 
     /**
@@ -48,10 +46,9 @@ class %sLogic
      */
     public function updateField($requestData)
     {
-        $data   = $requestData;
-        $id     = $requestData['id'];
-        unset($data['id']);
-        return $this->service->update(['id' => $id], $data);
+        $id = $requestData['id'];
+        unset($requestData['id']);
+        return $this->service->update(['id' => $id], $requestData);
     }
 
     /**
