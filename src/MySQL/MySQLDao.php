@@ -155,7 +155,7 @@ class MySQLDao
                 case '>=':  if (!is_array($value[1]))   $table->where($field, '>=', $value[1]); break;
                 case '&':   if (is_array($value[1]))    $table->whereBetween($field, $value[1]); break;
                 default:
-                    $table->whereIn($field, $value[1]);
+                    $table->whereIn($field, $value);
             }
         }
 
