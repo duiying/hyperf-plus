@@ -193,5 +193,7 @@ class Util
         array_walk($objList, function (&$obj) {
             $obj = (array)$obj;
         });
+
+        return $objList;
     }
 }
