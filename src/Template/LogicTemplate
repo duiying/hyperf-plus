@@ -61,9 +61,9 @@ class %sLogic
      */
     public function search($requestData, $p, $size)
     {
-         $list  = $this->service->search($requestData, $p, $size);
-         $total = $this->service->count($requestData);
-         return Util::formatSearchRes($p, $size, $total, $list);
+        $list  = $this->service->search($requestData, $p, $size);
+        $total = $this->service->count($requestData);
+        return Util::formatSearchRes($p, $size, $total, $list);
     }
 
     /**
