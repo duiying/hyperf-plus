@@ -108,6 +108,7 @@ class MySQLDao
      */
     public function update($where = [], $data = [])
     {
+        if (empty($data)) return 0;
         $table = $this->getBuilderByWhere($where);
         return $table->update($data);
     }
