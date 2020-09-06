@@ -16,19 +16,24 @@ class ErrorCode extends AbstractConstants
 {
     /******************** 基础错误 begin 1001 ~ 1200 ********************************************************************/
     /**
-     * @Message("参数错误")
+     * @Message("参数错误！")
      */
     const PARAMS_INVALID                                = 1001;
 
     /**
-     * @Message("服务异常")
+     * @Message("服务异常！")
      */
     const TRIGGER_EXCEPTION                             = 1002;
 
     /**
-     * @Message("请勿重复操作")
+     * @Message("请勿重复操作！")
      */
     const REPEAT_EXCEPTION                              = 1003;
+
+    /**
+     * @Message("字段不能为空！")
+     */
+    const FIELD_EMPTY_EXCEPTION                         = 1004;
     /******************** 基础错误 end **********************************************************************************/
 
 

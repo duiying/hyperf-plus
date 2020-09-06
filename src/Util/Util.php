@@ -2,6 +2,8 @@
 
 namespace HyperfPlus\Util;
 
+use HyperfPlus\Constant\ErrorCode;
+use HyperfPlus\Exception\CommonException;
 use HyperfPlus\Redis\Redis;
 
 /**
@@ -161,7 +163,14 @@ class Util
         $sanitizedData = [];
 
         foreach ($requestData as $k => $v) {
-            if (isset($rules[$k])) $sanitizedData[$k] = $v;
+            if (isset($rules[$k])) {
+                // 对字符串类型的字段进行 trim 操作
+                if (self::contain($rules[$k], 'required') && self::contain($rules[$k], 'string')) {
+                    $v = trim($v);
+                    if (empty($v)) throw new CommonException(ErrorCode::FIELD_EMPTY_EXCEPTION);
+                }
+                $sanitizedData[$k] = $v;
+            }
         }
 
         return $sanitizedData;
