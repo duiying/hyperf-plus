@@ -186,7 +186,7 @@ class Util
     {
         $ids = rtrim($ids, ',');
         if (empty($ids)) return [];
-        return explode(',', $ids);
+        return array_unique(explode(',', $ids));
     }
 
     /**
