@@ -205,4 +205,26 @@ class Util
 
         return $objList;
     }
+
+    /**
+     * 二维数组根据某个字段去重
+     *
+     * @param $arr
+     * @param $column
+     * @return array
+     */
+    public static function twoDimensionalArrayUnique($arr, $column)
+    {
+        if (empty($arr)) return [];
+
+        $tmpArr = [];
+
+        foreach ($arr as $k => $v) {
+            if (!isset($tmpArr[$v[$column]])) {
+                $tmpArr[] = $v;
+            }
+        }
+
+        return array_values($tmpArr);
+    }
 }
