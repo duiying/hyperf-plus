@@ -221,7 +221,7 @@ class Util
 
         foreach ($arr as $k => $v) {
             if (!isset($tmpArr[$v[$column]])) {
-                $tmpArr[] = $v;
+                $tmpArr[$v[$column]] = $v;
             }
         }
 
