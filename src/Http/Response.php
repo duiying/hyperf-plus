@@ -54,4 +54,15 @@ class Response
     {
         return $this->response->json([Constant::API_CODE => $code, Constant::API_MESSAGE => $msg, Constant::API_DATA => $data]);
     }
+
+    /**
+     * 重定向
+     *
+     * @param $url
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function redirect($url)
+    {
+        return $this->response->redirect($url);
+    }
 }
