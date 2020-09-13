@@ -38,6 +38,9 @@ class PjaxMiddleware
             return $response;
         }
 
+        // 如果是登录页，直接返回
+        if ($request->getUri()->getPath() === '/v1/user/login') return $response;
+
         // 截取指定注释之间的 HTML 内容，作为返回的局部 HTML 内容，用于 PJAX 局部刷新用
         $html = new SwooleStream(
             self::getStrBetweenTwoStr($response->getBody()->getContents(), $this->pjaxContentBegin, $this->pjaxContentEnd)
