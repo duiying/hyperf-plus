@@ -2,14 +2,13 @@
 
 namespace HyperfPlus\RPC;
 
+use Hyperf\Guzzle\ClientFactory;
 use HyperfPlus\Constant\Constant;
 use HyperfPlus\Constant\ErrorCode;
 use HyperfPlus\Exception\HttpRPCException;
-use HyperfPlus\Http\Client;
 use HyperfPlus\Log\Log;
 use HyperfPlus\Retry\Retry;
 use HyperfPlus\Util\Util;
-use Hyperf\Di\Annotation\Inject;
 
 /**
  * 基于 GuzzleHTTP 客户端的 RPC 组件
@@ -27,10 +26,14 @@ class HttpRPC
     public $service = '';
 
     /**
-     * @Inject()
-     * @var Client
+     * @var \Hyperf\Guzzle\ClientFactory
      */
-    public $client;
+    private $clientFactory;
+
+    public function __construct(ClientFactory $clientFactory)
+    {
+        $this->clientFactory = $clientFactory;
+    }
 
     /**
      * 远程调用，返回 data 字段（Array 格式）
@@ -113,7 +116,7 @@ class HttpRPC
         ];
         if (!empty($this->service)) $options['base_uri'] = $this->service;
 
-        $client = $this->client->getClient($options);
+        $client = $this->clientFactory->create($options);
 
         // 日志记录请求开始时间
         $beginTime = microtime(true);
